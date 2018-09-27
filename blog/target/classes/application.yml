@@ -1,0 +1,31 @@
+server:
+  port: 8080
+
+debug: true
+
+spring:
+  datasource:                           # DataSource
+    url: jdbc:mysql://localhost:3306/blog?characterEncoding=utf-8&useSSL=false
+    username: root
+    password: 123456
+    driverClassName: com.mysql.jdbc.Driver
+
+  thymeleaf:                            # THYMELEAF
+    encoding: UTF-8
+    cache: false                        # 热部署静态文件
+    mode: LEGACYHTML5                         # 使用HTML5标准
+  data:
+    elasticsearch:
+      cluster-nodes: 192.168.110.129:9300     # 远程服务
+      properties:
+        transport:
+          tcp:
+            connect_timeout: 120s       # 设置连接超时时间
+#        path:
+#          home: target/elastic          # 内嵌 Elasticsearch 实例。默认存储位置是工作目录的 elastic 目录 (测试用)
+  jpa:                                  # JPA
+    show-sql: true
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update
