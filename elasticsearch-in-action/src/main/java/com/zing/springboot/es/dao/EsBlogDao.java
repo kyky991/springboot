@@ -1,6 +1,6 @@
-package com.zing.springboot.blog.es.dao;
+package com.zing.springboot.es.dao;
 
-import com.zing.springboot.blog.es.pojo.EsBlog;
+import com.zing.springboot.es.pojo.EsBlog;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;

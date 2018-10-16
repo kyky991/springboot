@@ -1,4 +1,4 @@
-package com.zing.springboot.blog.es.pojo;
+package com.zing.springboot.es.pojo;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;

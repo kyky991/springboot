@@ -27,9 +27,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * User 实体
- *
- * @author <a href="https://xxx.com">xxx</a>
- * @since 1.0.0 2017年3月5日
  */
 @Entity // 实体
 public class User implements UserDetails, Serializable {
@@ -137,8 +134,8 @@ public class User implements UserDetails, Serializable {
 
     public void setEncodePassword(String password) {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
-        String encodePasswd = encoder.encode(password);
-        this.password = encodePasswd;
+        String encodePassword = encoder.encode(password);
+        this.password = encodePassword;
     }
 
     public String getAvatar() {

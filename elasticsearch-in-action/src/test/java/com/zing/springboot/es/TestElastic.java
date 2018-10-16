@@ -1,6 +1,6 @@
-package com.zing.springboot.blog.es;
+package com.zing.springboot.es;
 
-import com.zing.springboot.blog.es.pojo.EsBlog;
+import com.zing.springboot.es.pojo.EsBlog;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
-import com.zing.springboot.blog.es.dao.EsBlogDao;
+import com.zing.springboot.es.dao.EsBlogDao;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
