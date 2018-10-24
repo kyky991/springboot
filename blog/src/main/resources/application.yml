@@ -8,7 +8,7 @@ spring:
     url: jdbc:mysql://localhost:3306/blog?characterEncoding=utf-8&useSSL=false
     username: root
     password: 123456
-    driverClassName: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.jdbc.Driver
 
   thymeleaf:                            # THYMELEAF
     encoding: UTF-8

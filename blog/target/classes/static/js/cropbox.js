@@ -1,9 +1,3 @@
-/*!
- * 图片剪切 js.
- *
- * @since: 1.0.0
- * @author xxx <https://xxx.com>
- */
 'use strict';
 
 (function (window, document, cropbox) {

@@ -1,0 +1,51 @@
+spring:
+  profiles:
+    active: dev
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+  #session会话存储类型
+  session:
+    store-type: redis
+  thymeleaf:
+    mode: HTML
+    suffix: .html
+    prefix: classpath:/templates/
+  devtools:
+    restart:
+      exclude: templates/**,static/**
+  redis:
+    host: 192.168.110.129
+    port: 6379
+    pool:
+      max-idle: 1
+    timeout: 3000
+logging:
+  level:
+    org.hibernate.SQL: debug
+#关闭http基本验证
+security:
+  basic:
+    enabled: false
+server:
+  error:
+    whitelabel:
+      enabled: false
+elasticsearch:
+  cluster:
+    name: elasticsearch
+  host: 192.168.110.129
+  port: 9300
+qiniu:
+  accessKey: xxx
+  secretKey: xxx
+  bucket: xxx
+  cdn:
+    prefix: xxx
+aliyun:
+  sms:
+    accessKey: xx
+    accessKeySecret: xx
+    template:
+      code: xx
