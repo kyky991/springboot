@@ -12,6 +12,11 @@ public class HouseBucketDTO {
      */
     private long count;
 
+    public HouseBucketDTO(String key, long count) {
+        this.key = key;
+        this.count = count;
+    }
+
     public String getKey() {
         return key;
     }

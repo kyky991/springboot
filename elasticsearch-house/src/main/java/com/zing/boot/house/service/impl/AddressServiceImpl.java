@@ -11,6 +11,7 @@ import com.zing.boot.house.repository.SupportAddressRepository;
 import com.zing.boot.house.service.IAddressService;
 import com.zing.boot.house.service.ServiceMultiResult;
 import com.zing.boot.house.service.ServiceResult;
+import com.zing.boot.house.service.search.BaiduMapLocation;
 import com.zing.boot.house.web.dto.SubwayDTO;
 import com.zing.boot.house.web.dto.SubwayStationDTO;
 import com.zing.boot.house.web.dto.SupportAddressDTO;
@@ -173,102 +174,101 @@ public class AddressServiceImpl implements IAddressService {
         return ServiceResult.of(addressDTO);
     }
 
-//    @Override
-//    public ServiceResult<BaiduMapLocation> getBaiduMapLocation(String city, String address) {
-//        String encodeAddress;
-//        String encodeCity;
-//
-//        try {
-//            encodeAddress = URLEncoder.encode(address, "UTF-8");
-//            encodeCity = URLEncoder.encode(city, "UTF-8");
-//        } catch (UnsupportedEncodingException e) {
-//            logger.error("Error to encode house address", e);
-//            return new ServiceResult<BaiduMapLocation>(false, "Error to encode hosue address");
-//        }
-//
-//        HttpClient httpClient = HttpClients.createDefault();
-//        StringBuilder sb = new StringBuilder(BAIDU_MAP_GEOCONV_API);
-//        sb.append("address=").append(encodeAddress).append("&")
-//                .append("city=").append(encodeCity).append("&")
-//                .append("output=json&")
-//                .append("ak=").append(BAIDU_MAP_KEY);
-//
-//        HttpGet get = new HttpGet(sb.toString());
-//        try {
-//            HttpResponse response = httpClient.execute(get);
-//            if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-//                return new ServiceResult<BaiduMapLocation>(false, "Can not get baidu map location");
-//            }
-//
-//            String result = EntityUtils.toString(response.getEntity(), "UTF-8");
-//            JsonNode jsonNode = objectMapper.readTree(result);
-//            int status = jsonNode.get("status").asInt();
-//            if (status != 0) {
-//                return new ServiceResult<BaiduMapLocation>(false, "Error to get map location for status: " + status);
-//            }
-//            {
-//                BaiduMapLocation location = new BaiduMapLocation();
-//                JsonNode jsonLocation = jsonNode.get("result").get("location");
-//                location.setLongitude(jsonLocation.get("lng").asDouble());
-//                location.setLatitude(jsonLocation.get("lat").asDouble());
-//                return ServiceResult.of(location);
-//            }
-//
-//        } catch (IOException e) {
-//            logger.error("Error to fetch baidumap api", e);
-//            return new ServiceResult<BaiduMapLocation>(false, "Error to fetch baidumap api");
-//        }
-//    }
-//
-//    @Override
-//    public ServiceResult lbsUpload(BaiduMapLocation location, String title,
-//                                   String address,
-//                                   long houseId, int price,
-//                                   int area) {
-//        HttpClient httpClient = HttpClients.createDefault();
-//        List<NameValuePair> nvps = new ArrayList<>();
-//        nvps.add(new BasicNameValuePair("latitude", String.valueOf(location.getLatitude())));
-//        nvps.add(new BasicNameValuePair("longitude", String.valueOf(location.getLongitude())));
-//        nvps.add(new BasicNameValuePair("coord_type", "3")); // 百度坐标系
-//        nvps.add(new BasicNameValuePair("geotable_id", "191291"));
-//        nvps.add(new BasicNameValuePair("ak", BAIDU_MAP_KEY));
-//        nvps.add(new BasicNameValuePair("houseId", String.valueOf(houseId)));
-//        nvps.add(new BasicNameValuePair("price", String.valueOf(price)));
-//        nvps.add(new BasicNameValuePair("area", String.valueOf(area)));
-//        nvps.add(new BasicNameValuePair("title", title));
-//        nvps.add(new BasicNameValuePair("address", address));
-//
-//        HttpPost post;
-//        if (isLbsDataExists(houseId)) {
-//            post = new HttpPost(LBS_UPDATE_API);
-//        } else {
-//            post = new HttpPost(LBS_CREATE_API);
-//        }
-//
-//        try {
-//            post.setEntity(new UrlEncodedFormEntity(nvps, "UTF-8"));
-//            HttpResponse response = httpClient.execute(post);
-//            String result = EntityUtils.toString(response.getEntity(), "UTF-8");
-//            if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-//                logger.error("Can not upload lbs data for response: " + result);
-//                return new ServiceResult(false, "Can not upload baidu lbs data");
-//            } else {
-//                JsonNode jsonNode = objectMapper.readTree(result);
-//                int status = jsonNode.get("status").asInt();
-//                if (status != 0) {
-//                    String message = jsonNode.get("message").asText();
-//                    logger.error("Error to upload lbs data for status: {}, and message: {}", status, message);
-//                    return new ServiceResult(false, "Error to upload lbs data");
-//                } else {
-//                    return ServiceResult.success();
-//                }
-//            }
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return new ServiceResult(false);
-//    }
+    @Override
+    public ServiceResult<BaiduMapLocation> getBaiduMapLocation(String city, String address) {
+        String encodeAddress;
+        String encodeCity;
+
+        try {
+            encodeAddress = URLEncoder.encode(address, "UTF-8");
+            encodeCity = URLEncoder.encode(city, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            logger.error("Error to encode house address", e);
+            return new ServiceResult<BaiduMapLocation>(false, "Error to encode hosue address");
+        }
+
+        HttpClient httpClient = HttpClients.createDefault();
+        StringBuilder sb = new StringBuilder(BAIDU_MAP_GEOCONV_API);
+        sb.append("address=").append(encodeAddress).append("&")
+                .append("city=").append(encodeCity).append("&")
+                .append("output=json&")
+                .append("ak=").append(BAIDU_MAP_KEY);
+
+        HttpGet get = new HttpGet(sb.toString());
+        try {
+            HttpResponse response = httpClient.execute(get);
+            if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+                return new ServiceResult<BaiduMapLocation>(false, "Can not get baidu map location");
+            }
+
+            String result = EntityUtils.toString(response.getEntity(), "UTF-8");
+            JsonNode jsonNode = objectMapper.readTree(result);
+            int status = jsonNode.get("status").asInt();
+            if (status != 0) {
+                return new ServiceResult<BaiduMapLocation>(false, "Error to get map location for status: " + status);
+            } else  {
+                BaiduMapLocation location = new BaiduMapLocation();
+                JsonNode jsonLocation = jsonNode.get("result").get("location");
+                location.setLongitude(jsonLocation.get("lng").asDouble());
+                location.setLatitude(jsonLocation.get("lat").asDouble());
+                return ServiceResult.of(location);
+            }
+
+        } catch (IOException e) {
+            logger.error("Error to fetch baidumap api", e);
+            return new ServiceResult<BaiduMapLocation>(false, "Error to fetch baidumap api");
+        }
+    }
+
+    @Override
+    public ServiceResult lbsUpload(BaiduMapLocation location, String title,
+                                   String address,
+                                   long houseId, int price,
+                                   int area) {
+        HttpClient httpClient = HttpClients.createDefault();
+        List<NameValuePair> nvps = new ArrayList<>();
+        nvps.add(new BasicNameValuePair("latitude", String.valueOf(location.getLatitude())));
+        nvps.add(new BasicNameValuePair("longitude", String.valueOf(location.getLongitude())));
+        nvps.add(new BasicNameValuePair("coord_type", "3")); // 百度坐标系
+        nvps.add(new BasicNameValuePair("geotable_id", "191291"));
+        nvps.add(new BasicNameValuePair("ak", BAIDU_MAP_KEY));
+        nvps.add(new BasicNameValuePair("houseId", String.valueOf(houseId)));
+        nvps.add(new BasicNameValuePair("price", String.valueOf(price)));
+        nvps.add(new BasicNameValuePair("area", String.valueOf(area)));
+        nvps.add(new BasicNameValuePair("title", title));
+        nvps.add(new BasicNameValuePair("address", address));
+
+        HttpPost post;
+        if (isLbsDataExists(houseId)) {
+            post = new HttpPost(LBS_UPDATE_API);
+        } else {
+            post = new HttpPost(LBS_CREATE_API);
+        }
+
+        try {
+            post.setEntity(new UrlEncodedFormEntity(nvps, "UTF-8"));
+            HttpResponse response = httpClient.execute(post);
+            String result = EntityUtils.toString(response.getEntity(), "UTF-8");
+            if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+                logger.error("Can not upload lbs data for response: " + result);
+                return new ServiceResult(false, "Can not upload baidu lbs data");
+            } else {
+                JsonNode jsonNode = objectMapper.readTree(result);
+                int status = jsonNode.get("status").asInt();
+                if (status != 0) {
+                    String message = jsonNode.get("message").asText();
+                    logger.error("Error to upload lbs data for status: {}, and message: {}", status, message);
+                    return new ServiceResult(false, "Error to upload lbs data");
+                } else {
+                    return ServiceResult.success();
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new ServiceResult(false);
+    }
 
     private boolean isLbsDataExists(Long houseId) {
         HttpClient httpClient = HttpClients.createDefault();

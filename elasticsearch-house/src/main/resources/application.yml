@@ -21,6 +21,18 @@ spring:
     pool:
       max-idle: 1
     timeout: 3000
+  kafka:
+    bootstrap-servers: 192.168.110.129:9092
+    consumer:
+      group-id: xunwu
+  mail:
+    host: smtp.163.com
+    username: cyunzing@163.com
+    password: 123456
+    properties:
+      mail:
+        smtp:
+          auth: true
 logging:
   level:
     org.hibernate.SQL: debug

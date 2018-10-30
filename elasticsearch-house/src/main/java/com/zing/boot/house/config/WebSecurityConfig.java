@@ -1,9 +1,12 @@
 package com.zing.boot.house.config;
 
+import com.zing.boot.house.security.AuthFilter;
 import com.zing.boot.house.security.AuthProvider;
 import com.zing.boot.house.security.LoginAuthFailHandler;
 import com.zing.boot.house.security.LoginUrlEntryPoint;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity
@@ -21,6 +25,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.addFilterBefore(authFilter(), UsernamePasswordAuthenticationFilter.class);
+
         //资源访问权限
         http.authorizeRequests()
                 .antMatchers("/admin/login").permitAll() //管理员登录入口
@@ -50,8 +56,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * 自定义认证策略
      */
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    @Autowired
+    public void configGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authProvider()).eraseCredentials(true);
     }
 
@@ -68,5 +74,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public LoginAuthFailHandler loginAuthFailHandler() {
         return new LoginAuthFailHandler(urlEntryPoint());
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager() {
+        AuthenticationManager authenticationManager = null;
+        try {
+            authenticationManager = super.authenticationManager();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return authenticationManager;
+    }
+    @Bean
+    public AuthFilter authFilter() {
+        AuthFilter authFilter = new AuthFilter();
+        authFilter.setAuthenticationManager(authenticationManager());
+        authFilter.setAuthenticationFailureHandler(loginAuthFailHandler());
+        return authFilter;
     }
 }

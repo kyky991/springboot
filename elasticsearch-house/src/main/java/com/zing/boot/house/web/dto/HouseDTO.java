@@ -1,6 +1,7 @@
 package com.zing.boot.house.web.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -54,7 +55,7 @@ public class HouseDTO implements Serializable {
 
     private HouseDetailDTO houseDetail;
 
-    private List<String> tags;
+    private List<String> tags = new ArrayList<>();
 
     private List<HousePictureDTO> pictures;
 

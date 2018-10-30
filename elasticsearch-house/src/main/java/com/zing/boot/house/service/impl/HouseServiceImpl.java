@@ -255,7 +255,6 @@ public class HouseServiceImpl implements IHouseService {
             pictureDTOS.add(pictureDTO);
         }
 
-
         List<HouseTag> tags = houseTagRepository.findAllByHouseId(id);
         List<String> tagList = new ArrayList<>();
         for (HouseTag tag : tags) {

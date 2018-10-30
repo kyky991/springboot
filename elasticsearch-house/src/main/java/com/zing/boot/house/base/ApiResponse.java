@@ -45,7 +45,7 @@ public class ApiResponse {
         private int code;
         private String standardMessage;
 
-        Status(int code, String standardMessage) {
+        private Status(int code, String standardMessage) {
             this.code = code;
             this.standardMessage = standardMessage;
         }

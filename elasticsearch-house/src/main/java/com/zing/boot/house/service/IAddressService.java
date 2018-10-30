@@ -1,6 +1,7 @@
 package com.zing.boot.house.service;
 
 import com.zing.boot.house.entity.SupportAddress;
+import com.zing.boot.house.service.search.BaiduMapLocation;
 import com.zing.boot.house.web.dto.SubwayDTO;
 import com.zing.boot.house.web.dto.SubwayStationDTO;
 import com.zing.boot.house.web.dto.SupportAddressDTO;
@@ -76,6 +77,16 @@ public interface IAddressService {
      * @return
      */
     public ServiceResult<SupportAddressDTO> findCity(String cityEnName);
+
+    /**
+     * 根据城市以及具体地位获取百度地图的经纬度
+     */
+    ServiceResult<BaiduMapLocation> getBaiduMapLocation(String city, String address);
+
+    /**
+     * 上传百度LBS数据
+     */
+    ServiceResult lbsUpload(BaiduMapLocation location, String title, String address, long houseId, int price, int area);
 
     /**
      * 移除百度LBS数据
