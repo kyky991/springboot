@@ -1,0 +1,65 @@
+server:
+  port: 8090
+
+management:
+  server:
+    port: 8091
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+spring:
+  boot:
+    admin:
+      client:
+        url: http://localhost:8070
+  druid:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/houses?useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull
+    username: root
+    password: 123456
+    max-active: 30
+    min-adle: 5
+    max-wait: 10000
+    validation-query: SELECT 1
+  freemarker:
+    charset: UTF-8
+    content-type: text/html;charset=UTF-8
+    expose-request-attributes: true
+    expose-session-attributes: true
+    expose-spring-macro-helpers: true
+    suffix: .ftl
+    settings:
+      datetime_format: yyyy-MM-dd HH:mm:ss
+      default_encoding: UTF-8
+      auto_import: common/common.ftl as common
+  mail:
+    host: smtp.163.com
+    username: cyunzing@163.com
+    password: a514974434
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+  output:
+    ansi:
+      enabled: always
+
+mybatis:
+  config-location: classpath:/mybatis/mybatis-config.xml
+
+file:
+  #\u672C\u5730\u5B58\u653E\u7684\u6587\u4EF6\u8DEF\u5F84,\u53EF\u4EE5\u4FEE\u6539\u6210\u81EA\u5DF1\u7684\u56FE\u7247\u5B58\u653E\u8DEF\u5F84,\u5BF9\u5E94nginx.conf\u91CCalias\u5BF9\u5E94\u76EE\u5F55(\u82E5\u672C\u5730\u5B89\u88C5\u4E86nginx\u670D\u52A1\u5668,\u5F00\u542F\u5982\u4E0B\u914D\u7F6E)
+  path: I:/tmp/imgs
+  #\u9759\u6001\u8D44\u6E90\u5730\u5740\u524D\u7F00(\u82E5\u672C\u5730\u5B89\u88C5\u4E86nginx\u670D\u52A1\u5668,\u5F00\u542F\u5982\u4E0B\u914D\u7F6E)
+  prefix: http://127.0.0.1:8081/images
+
+domain:
+  name: 127.0.0.1:8090
