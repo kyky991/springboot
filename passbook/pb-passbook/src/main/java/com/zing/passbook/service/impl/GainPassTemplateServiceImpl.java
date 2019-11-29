@@ -45,7 +45,7 @@ public class GainPassTemplateServiceImpl implements IGainPassTemplateService {
     public Response gainPassTemplate(GainPassTemplateRequest request) throws Exception {
         PassTemplate passTemplate;
 
-        String passTemplateId = RowKeyGenUtils.genPassRowKey(request);
+        String passTemplateId = RowKeyGenUtils.genPassTemplateRowKey(request.getPassTemplate());
 
         try {
             passTemplate = hbaseTemplate.get(Constants.PassTemplateTable.TABLE_NAME, passTemplateId, new PassTemplateRowMapper());

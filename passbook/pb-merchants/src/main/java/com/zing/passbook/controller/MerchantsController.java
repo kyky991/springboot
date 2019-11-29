@@ -28,7 +28,7 @@ public class MerchantsController {
     }
 
     @GetMapping("/{id}")
-    public Response buildMerchantsInfo(@PathVariable Integer id) {
+    public Response buildMerchantsInfo(@PathVariable Long id) {
         log.info("BuildMerchantsInfo: {}", id);
         return merchantsService.buildMerchantsInfoById(id);
     }

@@ -65,6 +65,7 @@ public class TokenUploadController {
             }
         } catch (Exception e) {
             log.error(e.getMessage(), e);
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
         }
 
         return "redirect:/uploadStatus";

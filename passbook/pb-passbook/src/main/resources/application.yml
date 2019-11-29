@@ -4,23 +4,27 @@ spring:
   application:
     name: passbook
   datasource:
+    driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql:///passbook?autoReconnect=true&useSSL=true
     username: root
     password: 123456
+  jpa:
+    hibernate:
+      use-new-id-generator-mappings: false
   kafka:
-    bootstrap-servers: 192.168.0.84:9092
+    bootstrap-servers: hadooooop:9092
     consumer:
       group-id: passbook
     listener:
       concurrency: 4
   data:
     hbase:
-      quorum: 192.168.0.84:2181
-      rootDir: file:///D:/tmp/root_dir
+      quorum: hadooooop:2181
+      rootDir: file:///tmp/root_dir
       nodeParent: /hbase
   redis:
-    host: 192.168.0.84
+    host: hadooooop
     port: 6379
 logging:
-  level: debug
-  file: passbook.log
+  level:
+    com.zing.passbook: debug

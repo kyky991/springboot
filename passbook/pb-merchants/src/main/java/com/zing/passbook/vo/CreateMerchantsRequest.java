@@ -79,7 +79,7 @@ public class CreateMerchantsRequest {
      */
     public Merchants toMerchants() {
         Merchants merchants = new Merchants();
-        BeanUtils.copyProperties(merchants, this);
+        BeanUtils.copyProperties(this, merchants);
         return merchants;
     }
 }
