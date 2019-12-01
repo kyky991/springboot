@@ -5,7 +5,7 @@ spring:
     name: passbook
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql:///passbook?autoReconnect=true&useSSL=true
+    url: jdbc:mysql://mysqqqqql:3306/passbook?autoReconnect=true&useSSL=true
     username: root
     password: 123456
   jpa:
