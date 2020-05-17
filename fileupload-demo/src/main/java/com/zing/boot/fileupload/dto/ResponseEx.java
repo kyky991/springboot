@@ -1,9 +1,9 @@
 package com.zing.boot.fileupload.dto;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zing.boot.fileupload.config.ErrorCode;
 import com.zing.boot.fileupload.config.SuccessCode;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
 import org.springframework.data.domain.Page;
 
 import java.io.IOException;
